@@ -14,7 +14,7 @@ p=p.T
 
 tRes=[1,0,1,0,1,0,1,0,1,0]
 t=tRes
-w=2*np.random.rand(1,7)-1
+w=2*np.random.rand(1,3)-1
 b=2*np.random.rand(1)-1
 e=np.zeros(10)
 for epocas in range(500):
