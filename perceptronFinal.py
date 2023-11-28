@@ -9,59 +9,14 @@ def hardlim(w, dato, b):
     else:
         return 0
     
-pArr=np.array([[103, 69, 68],
-            [103, 76, 68],
-            [103, 75, 68],
-            [103, 75, 68],
-            [103, 75, 62],
-            [103, 75, 68],
-            [104, 69, 68],
-            [104, 75, 68],
-            [104, 75, 68],
-            [103, 75, 68],
-            [103, 75, 68],
-            [103, 69, 68],
-            [103, 75, 68],
-            [103, 75, 68],
-            [103, 75, 62],
-            [103, 75, 68],
-            [103, 69, 68],
-            [103, 75, 68],
-            [97, 75, 67],
-            [104, 75, 68],
-            [103, 75, 68],
-            [104, 75, 68],
-            [103, 75, 68],
-            [100, 75, 68],
-            
-            [58, 149, 117],
-            [59, 142, 117],
-            [60, 147, 116],
-            [60, 147, 116],
-            [59, 147, 116],
-            [59, 147, 117],
-            [59, 147, 116],
-            [59, 147, 116],
-            [59, 147, 116],
-            [59, 141, 116],
-            [59, 141, 116],
-            [59, 147, 116],
-            [59, 141, 116],
-            [59, 147, 119],
-            [59, 147, 116],
-            [59, 146, 116],
-            [59, 149, 116],
-            [59, 141, 116],
-            [59, 147, 117],
-            [59, 140, 116],
-            [59, 148, 117],
-            [59, 141, 116],
-            [59, 147, 116],
-            [59, 146, 117]])
-
-tRes=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-
-response=np.array(tRes)
+def perceptronFinal(dato):
+    if hardlim(pesosGlobales, dato, biasGlobal) == 1:
+        return "Jitomate"
+    else: 
+        return "Limón"
+    
+pesosGlobales = np.array([-0.67858583, -0.41029803,  0.9240771 ])
+biasGlobal = np.array([0.67065113])
 
 def arduino_read_data(file):
     encoding = "utf-8"
@@ -89,32 +44,8 @@ def arduino_read_data(file):
             print(arrIntValues)
             
             f.write(getSerialValue.decode(encoding))
-            
-            pesos = np.random.uniform(-1, 1, size=3)
-            bias = np.random.uniform(-1,1)
-            learningRate = 0.01
-            epocas = 300
-            
-            for epoca in range(epocas):
-                totalErrors = 0
-                for i in range(len(pArr)):
-                    prediction = hardlim(pesos, pArr[i], bias)
-                    error = response[i] - prediction
-                    totalErrors += error**2
                     
-                    pesos[0] += learningRate * pArr[i][0] * error
-                    pesos[1] += learningRate * pArr[i][1] * error
-                    pesos[2] += learningRate * pArr[i][2] * error
-                    
-                    bias += learningRate * error
-                    
-            hardlim(pesos, arrIntValues, bias)
-            
-            def perceptronFinal(dato):
-                if hardlim(pesos, dato, bias) == 1:
-                    return "Jitomate"
-                else: 
-                    return "Limón"
+            print(hardlim(pesosGlobales, arrIntValues, biasGlobal))
                 
             print(perceptronFinal(arrIntValues))
         
